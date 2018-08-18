@@ -1,5 +1,5 @@
 var bebop = require('node-bebop');
-var droneMove = require('droneMove');
+var droneMove = require('../droneMove');
 
 var drone = bebop.createClient();
 
