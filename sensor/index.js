@@ -5,8 +5,9 @@ const envsensor = new Envsensor();
 // `EnvsensorDevice` object
 let device = null;
 
+// センサーデータ格納配列
 var array = new Array();
-
+// ドローンがアクション中かどうか
 var moving = false;
 // Initialize the `Envsensor` object
 envsensor.init().then(() => {
@@ -23,26 +24,31 @@ envsensor.init().then(() => {
 }).then(() => {
   // Set the measurement interval to 3 seconds
   return device.setBasicConfigurations({
-    measurementInterval: 1
+    measurementInterval: 2
   });
 }).then(() => {
   // Set a callback function to receive notifications
   device.onsensordata = (data) => {
 
+    // 最新のセンサーデータをいくつか確保
     array.push(data["soundNoise"]);
     if (array.length > 4){
       array.shift();
     }
+
+    // 音圧変化量を取得
     var ave1 = (array[0]+array[1])/2;
     var ave2 = (array[2]+array[3])/2;
-
     var diff = ave1 - ave2;
+    console.log(array);
 
     if( (moving == false) & (!isNaN(diff)) ){
       console.log(diff);
+      // ドローンへの動作指示
       const promise = new Promise((resolve, reject) => resolve((function () {
         return 'a';
       })()));
+      promise.then((result) => console.log(result));
     }
   };
 
