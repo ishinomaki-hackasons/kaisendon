@@ -1,5 +1,5 @@
-var bebop = require('./../node-bebop');
-var droneMove = require('./../droneMove');
+var bebop = require('node-bebop');
+var droneMove = require('droneMove');
 
 var drone = bebop.createClient();
 
@@ -10,7 +10,7 @@ drone.connect(function() {
         }, 1000);
 
         setTimeout(function() {
-            droneMove.youOkay(drone);
+            droneMove.moves.youOkay(drone);
             //droneMove.letsGo(drone);
             //droneMove.whatsUp(drone);
         }, 4000);
