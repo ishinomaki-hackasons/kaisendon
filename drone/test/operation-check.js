@@ -10,7 +10,7 @@ drone.connect(function() {
         }, 1000);
 
         setTimeout(function() {
-            droneMove.moves.youOkay(drone);
+            droneMove.youOkay(drone);
             //droneMove.letsGo(drone);
             //droneMove.whatsUp(drone);
         }, 4000);
