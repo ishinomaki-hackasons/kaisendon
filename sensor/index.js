@@ -40,6 +40,9 @@ envsensor.init().then(() => {
 
     if( (moving == false) & (!isNaN(diff)) ){
       console.log(diff);
+      const promise = new Promise((resolve, reject) => resolve((function () {
+        return 'a';
+      })()));
     }
   };
 
