@@ -1,3 +1,5 @@
+module.exports.getSensor = function(drone) {
+
 // Load the node-omron-envsensor and get a `Envsensor` constructor object
 const Envsensor = require('node-omron-envsensor');
 // Create an `Envsensor` object
@@ -9,6 +11,9 @@ let device = null;
 var array = new Array();
 // ドローンがアクション中かどうか
 var moving = false;
+var line_para = 4;
+
+var diff = 0;
 // Initialize the `Envsensor` object
 envsensor.init().then(() => {
   // Discover a device
@@ -39,8 +44,32 @@ envsensor.init().then(() => {
     // 音圧変化量を取得
     var ave1 = (array[0]+array[1])/2;
     var ave2 = (array[2]+array[3])/2;
-    var diff = ave1 - ave2;
+    diff = ave1 - ave2;
     console.log(array);
+
+    if (diff <= -30) {
+      line_para = 1;
+    } else if (diff >= 30) {
+      line_para = 2;
+    } else {
+      var sum  = function(arr) {
+          var sum = 0;
+          arr.forEach(function(elm) {
+              sum += elm;
+          });
+          return sum;
+      };
+      var average = function(arr, fn) {
+        return sum(arr, fn)/arr.length;
+      };
+      noise_ave = average(array);
+
+      if (noise_ave >= 40) {
+        line_para = 3;
+      } else {
+        line_para = 4;
+      }
+    }
 
     if( (moving == false) & (!isNaN(diff)) ){
       console.log(diff);
@@ -65,7 +94,11 @@ envsensor.init().then(() => {
     }).then(() => {
       process.exit();
     });
-  }, 30000);
+  }, 100000);
 }).catch((error) => {
   console.error(error);
 });
+
+return line_para;
+
+}
