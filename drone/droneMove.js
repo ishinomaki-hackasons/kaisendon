@@ -1,5 +1,20 @@
 "use strict";
 
+// 起動
+module.exports.droneStart = function(drone) {
+    setTimeout(function() {
+        drone.takeOff();
+    }, 1000);
+}
+
+// 停止
+module.exports.droneStop = function(drone) {
+    setTimeout(function() {
+        drone.land();
+    }, 1000);
+}
+
+
 // ずっと静かな場合：youOkay（このままでいいの？）
 module.exports.youOkay = function(drone) {
     // 前後に振る（挑発する感じ、煽りたい）
@@ -52,12 +67,23 @@ module.exports.letsGo = function(drone) {
     }, 4000);
 }
 
-
-
 // 騒がしい状態から静かになった場合：whatsUp（おいおいどうした）
-// module.exports.whatsUp = function(drone) {
-//     // ちょっと下に落とす（落ちそうな感じ、ヒヤッとさせたい）
-//     //お笑いでこける感じ
-//     drone.laud();
-//     drone.stop();
-// }
+module.exports.whatsUp = function(drone) {
+    // ちょっと下に落とす（落ちそうな感じ、ヒヤッとさせたい）
+    //お笑いでこける感じ
+    drone.laud();
+    drone.stop();
+}
+
+// ずっと静かな場合：youOkay（このままでいいの？）
+module.exports.demo1 = function(drone) {
+    // 前後に振る（挑発する感じ、煽りたい）
+    setTimeout(function() {
+      drone.frontFlip();
+    }, 1000);
+
+    setTimeout(function() {
+        drone.stop();
+    }, 4000);
+}
+
