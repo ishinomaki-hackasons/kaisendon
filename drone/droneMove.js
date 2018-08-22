@@ -79,11 +79,15 @@ module.exports.whatsUp = function(drone) {
 module.exports.demo1 = function(drone) {
     // 前後に振る（挑発する感じ、煽りたい）
     setTimeout(function() {
-      drone.frontFlip();
+      drone.up(20);
     }, 1000);
 
     setTimeout(function() {
-        drone.stop();
-    }, 4000);
+      drone.frontFlip();
+    }, 5000);
+
+    setTimeout(function() {
+         drone.stop();
+    }, 7000);
 }
 
